@@ -1,5 +1,5 @@
 (ns clj-lucene.index
-  (:use [clj-lucene.document :only [make-document]])
+  (:use [clj-lucene.document :only [document]])
   (:import [org.apache.lucene.index IndexWriter IndexWriter$MaxFieldLength]
 	   [org.apache.lucene.store RAMDirectory]
 	   [org.apache.lucene.analysis.standard StandardAnalyzer]
@@ -18,4 +18,4 @@
 (defn add-document
   "Adds a map representing the document to this index."
   [^IndexWriter w map]
-  (.addDocument w (make-document map)))
+  (.addDocument w (document map)))
