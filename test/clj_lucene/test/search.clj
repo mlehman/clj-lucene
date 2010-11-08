@@ -21,5 +21,10 @@
       (is (= (count top-selling-books)
 	     (.maxDoc s))))))
 
-
+(deftest test-search
+  (testing "Search"
+    (with-open [s (index-searcher {:directory (book-index-directory)})]
+      (is (= 1 (:total-hits (search s "author:Salinger" :limit 10))))
+      (is (= 2 (:total-hits (search s "author:Tolkien" :limit 10))))
+      (is (= 6 (:total-hits (search s "title:C*" :limit 10)))))))
   
