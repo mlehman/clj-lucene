@@ -1,7 +1,7 @@
 (ns clj-lucene.index
   (:use [clj-lucene.document :only [document]]
 	[clj-lucene.store :only [ram-directory]])
-  (:import [org.apache.lucene.index IndexWriter IndexWriter$MaxFieldLength]
+  (:import [org.apache.lucene.index IndexWriter IndexWriter$MaxFieldLength Term]
 	   [org.apache.lucene.store RAMDirectory]
 	   [org.apache.lucene.analysis.standard StandardAnalyzer]
 	   [org.apache.lucene.document Document Field Field$Store Field$Index] 
@@ -22,3 +22,8 @@
   "Adds a map representing the document to this index."
   [^IndexWriter w map]
   (.addDocument w (document map)))
+
+(defn term
+  "Constructs a term."
+  ([^String field] (Term. field))
+  ([^String field ^String text] (Term. field text)))

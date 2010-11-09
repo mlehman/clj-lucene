@@ -4,7 +4,7 @@
 	[clj-lucene.store :only [ram-directory]]
 	[clj-lucene.test.data] :reload)
   (:use [clojure.test])
-  (:import [org.apache.lucene.search IndexSearcher]))
+  (:import [org.apache.lucene.search IndexSearcher TermQuery]))
 
 (defn book-index-directory []
   (with-open [w (index-writer)]
@@ -27,4 +27,9 @@
       (is (= 1 (:total-hits (search s "author:Salinger" :limit 10))))
       (is (= 2 (:total-hits (search s "author:Tolkien" :limit 10))))
       (is (= 6 (:total-hits (search s "title:C*" :limit 10)))))))
+
+(deftest testing-term-query
+  (testing "Construct a TermQuery."
+    (is (instance? TermQuery (term-query "author")))
+    (is (instance? TermQuery (term-query "author" "Salinger"))))) 
   
